@@ -3,9 +3,9 @@ class Transaction {
   String title;
   String date;
   String category;
-  int price;
+  dynamic price;
 
-  Transaction(String _id, int price, String title, String date,String category) {
+  Transaction(String _id, dynamic price, String title, String date,String category) {
     this._id = _id;
     this.title = title;
     this.date = date;
