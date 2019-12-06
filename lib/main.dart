@@ -1,4 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'API.dart';
+import 'models/Transaction.dart';
 
 void main() => runApp(MyApp());
 
@@ -18,10 +21,55 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      // home: MyHomePage(title: 'Flutter Home Page'),
+      home:MyListScreen()
     );
+  }
+}
+
+class MyListScreen extends StatefulWidget {
+  @override
+  createState() => _MyListScreenState();
+}
+
+class _MyListScreenState extends State {
+  var transactions = new List<Transaction>();
+
+  _getTransactions() {
+    API.getTransactions().then((response) {
+      setState(() {
+        Iterable list = json.decode(response.body);
+        transactions = list.map((model) => Transaction.fromJson(model)).toList();
+      });
+    });
+  }
+
+  initState() {
+    super.initState();
+    _getTransactions();
+  }
+
+  dispose() {
+    super.dispose();
+  }
+
+  @override
+  build(context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("Transaction List"),
+        ),
+        body: ListView.builder(
+          itemCount: transactions.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Text(transactions[index].title),
+              subtitle: Text(transactions[index].date)
+            );
+          },
+        ));
   }
 }
 
