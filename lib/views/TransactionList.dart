@@ -37,9 +37,13 @@ class _MyListScreenState extends State {
         body: ListView.builder(
           itemCount: transactions.length,
           itemBuilder: (context, index) {
+            var t = transactions[index];
             return ListTile(
-              title: Text(transactions[index].title),
-              subtitle: Text(transactions[index].date)
+              leading: Text(t.category),
+              title: Text(t.title),
+              subtitle: Text(t.date),
+              trailing: Text(t.price.toString()),
+              enabled: true,
             );
           },
         ));
