@@ -11,6 +11,10 @@ class TransactionForm extends StatefulWidget {
 class _TransactionForm extends State {
   final _formKey = GlobalKey<FormState>();
   // final _transaction = Transaction();
+  String _title = '';
+  dynamic _price = 0;
+  String _category = '';
+  String _date = '';
 
   initState() {
     super.initState();
@@ -40,6 +44,12 @@ class _TransactionForm extends State {
                     if (value.isEmpty) {
                       return 'Please enter title.';
                     }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    setState(() {
+                      _title = value;
+                    });
                   },
                 ),
                 TextFormField(
@@ -48,6 +58,12 @@ class _TransactionForm extends State {
                     if (value.isEmpty) {
                       return 'Please enter price.';
                     }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    setState(() {
+                      _price = value;
+                    });
                   },
                 ),
                 TextFormField(
@@ -56,6 +72,12 @@ class _TransactionForm extends State {
                     if (value.isEmpty) {
                       return 'Please enter category.';
                     }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    setState(() {
+                      _category = value;
+                    });
                   },
                 ),
                 FlatButton(
@@ -69,6 +91,9 @@ class _TransactionForm extends State {
                       // },
                       onConfirm: (date) {
                         String finalDate = date.toString().substring(0,10);
+                        setState(() {
+                          _date = finalDate;
+                        });
                       }
                     );
                   },
