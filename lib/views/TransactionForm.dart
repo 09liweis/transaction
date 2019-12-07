@@ -100,7 +100,23 @@ class _TransactionForm extends State {
                   child: Text(
                     'Pick a date',
                     style: TextStyle(color: Colors.white),
-                  ))
+                  )
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  child: RaisedButton(
+                    onPressed: () {
+                      // Validate returns true if the form is valid, or false
+                      // otherwise.
+                      if (_formKey.currentState.validate()) {
+                        // If the form is valid, display a Snackbar.
+                        Scaffold.of(context)
+                            .showSnackBar(SnackBar(content: Text('Processing Data')));
+                      }
+                    },
+                    child: Text('Submit'),
+                  ),
+                ),
               ]
             )
           )
