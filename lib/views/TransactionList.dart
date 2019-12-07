@@ -3,6 +3,7 @@ import 'dart:convert';
 import '../API.dart';
 import '../models/Transaction.dart';
 import '../views/TransactionForm.dart';
+import '../views/TransactionDetail.dart';
 class MyListScreen extends StatefulWidget {
   @override
   createState() => _MyListScreenState();
@@ -25,7 +26,12 @@ class _MyListScreenState extends State {
       MaterialPageRoute(builder: (context) => TransactionForm()),
     );
   }
-
+  _gotoDetail() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => TransactionDetail()),
+    );
+  }
   initState() {
     super.initState();
     _getTransactions();
@@ -47,11 +53,15 @@ class _MyListScreenState extends State {
         itemBuilder: (context, index) {
           var t = transactions[index];
           return ListTile(
-            leading: Text(t.category),
+            // leading: Text(t.category),
+            leading: Icon(Icons.category,size:30),
             title: Text(t.title),
             subtitle: Text(t.date),
             trailing: Text(t.price.toString()),
             enabled: true,
+            onTap:(){
+              _gotoDetail();
+            }
           );
         },
       ),
