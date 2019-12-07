@@ -70,6 +70,18 @@ class _MyListScreenState extends State {
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            title: Text('Home')
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.place),
+            title: Text('Place')
+          ),
+        ],
+      ),
     );
         
   }
