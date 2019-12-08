@@ -11,10 +11,10 @@ class TransactionForm extends StatefulWidget {
 class _TransactionForm extends State {
   final _formKey = GlobalKey<FormState>();
   // final _transaction = Transaction();
-  String _title = '';
-  dynamic _price = 0;
-  String _category = '';
-  String _date = '';
+  final titleController = TextEditingController();
+  final priceController = TextEditingController();
+  final categoryController = TextEditingController();
+  final dateController = TextEditingController();
 
   initState() {
     super.initState();
@@ -39,6 +39,7 @@ class _TransactionForm extends State {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children:[
                 TextFormField(
+                  controller: titleController,
                   decoration: InputDecoration(labelText: 'Title'),
                   validator: (value){
                     if (value.isEmpty) {
@@ -48,11 +49,12 @@ class _TransactionForm extends State {
                   },
                   onSaved: (value) {
                     setState(() {
-                      _title = value;
+                      
                     });
                   },
                 ),
                 TextFormField(
+                  controller: priceController,
                   decoration: InputDecoration(labelText: 'Price'),
                   validator: (value){
                     if (value.isEmpty) {
@@ -62,11 +64,11 @@ class _TransactionForm extends State {
                   },
                   onSaved: (value) {
                     setState(() {
-                      _price = value;
                     });
                   },
                 ),
                 TextFormField(
+                  controller: categoryController,
                   decoration: InputDecoration(labelText: 'Category'),
                   validator: (value){
                     if (value.isEmpty) {
@@ -76,7 +78,6 @@ class _TransactionForm extends State {
                   },
                   onSaved: (value) {
                     setState(() {
-                      _category = value;
                     });
                   },
                 ),
@@ -92,7 +93,7 @@ class _TransactionForm extends State {
                       onConfirm: (date) {
                         String finalDate = date.toString().substring(0,10);
                         setState(() {
-                          _date = finalDate;
+                          dateController.text = finalDate;
                         });
                       }
                     );
@@ -110,8 +111,11 @@ class _TransactionForm extends State {
                       // otherwise.
                       if (_formKey.currentState.validate()) {
                         // If the form is valid, display a Snackbar.
-                        Scaffold.of(context)
-                            .showSnackBar(SnackBar(content: Text('Processing Data')));
+                        Scaffold.of(context).showSnackBar(SnackBar(content: Text('Processing Data')));
+                        print(titleController.text);
+                        print(priceController.text);
+                        print(categoryController.text);
+                        print(dateController.text);
                       }
                     },
                     child: Text('Submit'),
