@@ -112,10 +112,14 @@ class _TransactionForm extends State {
                       if (_formKey.currentState.validate()) {
                         // If the form is valid, display a Snackbar.
                         Scaffold.of(context).showSnackBar(SnackBar(content: Text('Processing Data')));
-                        print(titleController.text);
-                        print(priceController.text);
-                        print(categoryController.text);
-                        print(dateController.text);
+                        var data = {
+                          'title':titleController.text,
+                          'price':priceController.text,
+                          'category':categoryController.text,
+                          'date':dateController.text,
+                        };
+                        API.postTransaction(data);
+                        Navigator.pop(context);
                       }
                     },
                     child: Text('Submit'),
