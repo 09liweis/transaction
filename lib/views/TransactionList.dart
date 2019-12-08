@@ -4,12 +4,12 @@ import '../API.dart';
 import '../models/Transaction.dart';
 import '../views/TransactionForm.dart';
 import '../views/TransactionDetail.dart';
-class MyListScreen extends StatefulWidget {
+class TransactionList extends StatefulWidget {
   @override
-  createState() => _MyListScreenState();
+  createState() => _TransactionListState();
 }
 
-class _MyListScreenState extends State {
+class _TransactionListState extends State {
   var transactions = new List<Transaction>();
 
   _getTransactions() {
@@ -44,9 +44,6 @@ class _MyListScreenState extends State {
   @override
   build(context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Transaction List"),
-      ),
       body: ListView.builder(
         padding: EdgeInsets.all(10),
         itemCount: transactions.length,
@@ -69,18 +66,6 @@ class _MyListScreenState extends State {
         onPressed: _gotoForm,
         tooltip: 'Increment',
         child: Icon(Icons.add),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text('Home')
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.place),
-            title: Text('Place')
-          ),
-        ],
       ),
     );
         
