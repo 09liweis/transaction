@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'views/TransactionList.dart';
+import 'views/PlaceList.dart';
 
 void main() => runApp(MyApp());
 
@@ -8,7 +9,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      // title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -22,8 +23,56 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
       ),
       // home: MyHomePage(title: 'Flutter Home Page'),
-      home:MyListScreen()
+      home:HomePage()
     );
+  }
+}
+
+class HomePage extends StatefulWidget {
+  @override
+  createState() => _HomePageState();
+}
+
+class _HomePageState extends State {
+  var _views = {
+    0:{
+      'title':'Transactions List',
+      'view':TransactionList()
+    },
+    1:{
+      'title':'Place List',
+      'view':PlaceList()
+    }
+  };
+  int _currentIndex = 0;
+  @override
+  build(context) {
+    String title = this._views[this._currentIndex]['title'];
+    var view = this._views[this._currentIndex]['view'];
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(title),
+      ),
+      body: view,
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: this._currentIndex,
+        onTap: (int index){
+          setState(() {
+            this._currentIndex = index;
+          });
+        },
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            title: Text('Home')
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.place),
+            title: Text('Place')
+          ),
+        ],
+      ),
+    );  
   }
 }
 
