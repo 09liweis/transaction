@@ -5,8 +5,15 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'dart:convert';
 import '../API.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_webservice/places.dart';
+import 'package:flutter_google_places/flutter_google_places.dart';
+import 'package:location/location.dart' as LocationManager;
 import '../models/Transaction.dart';
 import 'package:geolocator/geolocator.dart';
+
+const kGoogleApiKey = 'AIzaSyA74jvNet0DufU8aoTe39dELLy2rVMeuos';
+GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: kGoogleApiKey);
+
 class TransactionForm extends StatefulWidget {
   @override
   createState() => _TransactionForm();
@@ -20,13 +27,31 @@ class _TransactionForm extends State {
   final categoryController = TextEditingController();
   final dateController = TextEditingController();
   Completer<GoogleMapController> _controller = Completer();
+  List<Marker> _markers = <Marker>[];
   CameraPosition _cameraPosition = CameraPosition(target: LatLng(0, 0),zoom: 10);
+
   _getCurrentLocation() {
     final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
     geolocator
       .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
-      .then((Position position) {
+      .then((Position position) async {
+        final location = Location(position.latitude, position.longitude);
+        final result = await _places.searchNearbyWithRadius(location, 2500);
+        
       setState(() {
+        result.results.forEach((f) {
+          final marker = Marker(
+            flat:true,
+            icon:BitmapDescriptor.defaultMarker,
+            markerId:MarkerId(f.placeId),
+            position: LatLng(f.geometry.location.lat, f.geometry.location.lng),
+            // infoWindow: InfoWindow(title:"${f.name}", "${f.types?.first}")
+            infoWindow: InfoWindow(
+              title: f.name, snippet: f.vicinity
+            ),
+          );
+          _markers.add(marker);
+        });
         _cameraPosition = CameraPosition(target: LatLng(position.latitude, position.longitude),zoom: 10);
       });
     }).catchError((e) {
@@ -132,9 +157,7 @@ class _TransactionForm extends State {
                     onMapCreated: (GoogleMapController controller) {
                       _controller.complete(controller);
                     },
-                    // markers:[
-
-                    // ]
+                    markers:Set<Marker>.of(_markers),
                   ),
                 ),
                 Padding(
