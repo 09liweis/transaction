@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'dart:convert';
 import '../API.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../models/Transaction.dart';
+import 'package:geolocator/geolocator.dart';
 class TransactionForm extends StatefulWidget {
   @override
   createState() => _TransactionForm();
@@ -15,9 +19,23 @@ class _TransactionForm extends State {
   final priceController = TextEditingController();
   final categoryController = TextEditingController();
   final dateController = TextEditingController();
-
+  Completer<GoogleMapController> _controller = Completer();
+  CameraPosition _cameraPosition = CameraPosition(target: LatLng(0, 0),zoom: 10);
+  _getCurrentLocation() {
+    final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
+    geolocator
+      .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+      .then((Position position) {
+      setState(() {
+        _cameraPosition = CameraPosition(target: LatLng(position.latitude, position.longitude),zoom: 10);
+      });
+    }).catchError((e) {
+      print(e);
+    });
+  }
   initState() {
     super.initState();
+    _getCurrentLocation();
   }
 
   dispose() {
@@ -102,6 +120,22 @@ class _TransactionForm extends State {
                     'Pick a date',
                     style: TextStyle(color: Colors.white),
                   )
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height/3,
+                  child: GoogleMap(
+                    myLocationEnabled:true,
+                    myLocationButtonEnabled:true,
+                    mapType: MapType.normal,
+                    initialCameraPosition: _cameraPosition,
+                    onMapCreated: (GoogleMapController controller) {
+                      _controller.complete(controller);
+                    },
+                    // markers:[
+
+                    // ]
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
