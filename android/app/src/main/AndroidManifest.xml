@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.example.transaction">
-
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+	<uses-permission android:name="android.permission.INTERNET" />
 	<!-- io.flutter.app.FlutterApplication is an android.app.Application that
 				calls FlutterMain.startInitialization(this); in its onCreate method.
 				In most cases you can leave this as-is, but you if you want to provide
@@ -11,7 +13,7 @@
 		android:label="transaction"
 		android:icon="@mipmap/ic_launcher">
 		<meta-data android:name="com.google.android.geo.API_KEY"
-			android:value="AIzaSyCz78L9SpvuXxNK2RO_qadHikCVQAsSKew"/>
+			android:value="AIzaSyA74jvNet0DufU8aoTe39dELLy2rVMeuos"/>
 		<activity
 			android:name=".MainActivity"
 			android:launchMode="singleTop"
