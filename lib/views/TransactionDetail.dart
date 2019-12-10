@@ -5,13 +5,20 @@ class TransactionDetail extends StatelessWidget {
   TransactionDetail({Key key, @required this.transaction}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    var t = transaction;
     return Scaffold(
       appBar: AppBar(
-        title: Text(transaction.title),
+        title: Text(t.title),
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
-        child: Text('Detail'),
+        child: Column(
+          children: <Widget>[
+            Text(t.price.toString()),
+            Text(t.date),
+            Text(t.category),
+          ]
+        )
       ),
     );
   }
