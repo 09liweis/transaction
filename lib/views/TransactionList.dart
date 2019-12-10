@@ -26,10 +26,12 @@ class _TransactionListState extends State {
       MaterialPageRoute(builder: (context) => TransactionForm()),
     );
   }
-  _gotoDetail() {
+  _gotoDetail(t) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => TransactionDetail()),
+      MaterialPageRoute(
+        builder: (context) => TransactionDetail(transaction: t)
+      ),
     );
   }
   initState() {
@@ -57,7 +59,7 @@ class _TransactionListState extends State {
             trailing: Text(t.price.toString()),
             enabled: true,
             onTap:(){
-              _gotoDetail();
+              _gotoDetail(t);
             }
           );
         },
