@@ -20,4 +20,7 @@ class API {
     );
     return response;
   }
+  static Future getPlaces() {
+    return http.get(baseUrl+'places');
+  }
 }
