@@ -1,4 +1,4 @@
-class Transaction {
+class Place {
   String _id;
   String placeId;
   String name;
@@ -6,7 +6,7 @@ class Transaction {
   String lng;
   String address;
 
-  Transaction(String _id, String placeId, String address, String name, String lat,String lng) {
+  Place(String _id, String placeId, String address, String name, String lat,String lng) {
     this._id = _id;
     this.placeId = placeId;
     this.name = name;
@@ -15,7 +15,7 @@ class Transaction {
     this.address = address;
   }
 
-  Transaction.fromJson(Map json)
+  Place.fromJson(Map json)
       : _id = json['_id'],
         placeId = json['place_id'],
         name = json['name'],
