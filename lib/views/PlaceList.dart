@@ -5,6 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:convert';
 import '../API.dart';
 import '../models/Place.dart';
+import './PlaceDetail.dart';
 class PlaceList extends StatefulWidget {
   @override
   createState() => _PlaceListState();
@@ -36,13 +37,12 @@ class _PlaceListState extends State {
     });
   }
   _gotoDetail(p) {
-    print(p);
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (context) => PlaceDetail(transaction: t)
-    //   ),
-    // );
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PlaceDetail(place: p)
+      ),
+    );
   }
   Future<void> _gotoLocation(double lat,double long) async {
     final GoogleMapController controller = await _controller.future;
