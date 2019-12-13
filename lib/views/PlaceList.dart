@@ -35,7 +35,8 @@ class _PlaceListState extends State {
       });
     });
   }
-  _gotoDetail(t) {
+  _gotoDetail(p) {
+    print(p);
     // Navigator.push(
     //   context,
     //   MaterialPageRoute(
@@ -103,23 +104,28 @@ class _PlaceListState extends State {
     return (
       Padding(
         padding: const EdgeInsets.all(8.0),
-        child: _boxes(
-          "https://lh5.googleusercontent.com/p/AF1QipO3VPL9m-b355xWeg4MXmOQTauFAEkavSluTtJU=w225-h160-k-no",
-          double.parse(place.lat), double.parse(place.lng),place.name??place.address),
+        child: _boxes(place),
       ));
   }
-  Widget _boxes(String _image, double lat,double long,String placeName) {
+  Widget _boxes(Place place) {
+    String _image = "https://lh5.googleusercontent.com/p/AF1QipO3VPL9m-b355xWeg4MXmOQTauFAEkavSluTtJU=w225-h160-k-no";
+    double lat = double.parse(place.lat);
+    double lng = double.parse(place.lng);
+    String placeName = place.name??'No Name';
     return  GestureDetector(
       onTap: () {
-        _gotoLocation(lat,long);
+        _gotoDetail(place);
+      },
+      onDoubleTap: (){
+        _gotoLocation(lat,lng);
       },
       child:Container(
         child: new FittedBox(
           child: Material(
             color: Colors.white,
-            elevation: 14.0,
+            // elevation: 24.0,
             borderRadius: BorderRadius.circular(10.0),
-            shadowColor: Color(0x802196F3),
+            // shadowColor: Colors.green,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -132,19 +138,21 @@ class _PlaceListState extends State {
                       fit: BoxFit.fill,
                       image: NetworkImage(_image),
                     ),
-                  ),),
-                  Container(
+                  )
+                ),
+                Container(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(10.0),
                     child: placeBoxContainer(placeName),
                   ),
                 ),
-              ],)
+              ]
+            )
           ),
         ),
       ),
-  );
-}
+    );
+  }
   Widget placeBoxContainer(String placeName) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
