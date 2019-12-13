@@ -108,7 +108,7 @@ class _PlaceListState extends State {
           double.parse(place.lat), double.parse(place.lng),place.name??place.address),
       ));
   }
-  Widget _boxes(String _image, double lat,double long,String restaurantName) {
+  Widget _boxes(String _image, double lat,double long,String placeName) {
     return  GestureDetector(
       onTap: () {
         _gotoLocation(lat,long);
@@ -118,7 +118,7 @@ class _PlaceListState extends State {
           child: Material(
             color: Colors.white,
             elevation: 14.0,
-            borderRadius: BorderRadius.circular(24.0),
+            borderRadius: BorderRadius.circular(10.0),
             shadowColor: Color(0x802196F3),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -127,7 +127,7 @@ class _PlaceListState extends State {
                   width: 180,
                   height: 200,
                   child: ClipRRect(
-                    borderRadius: new BorderRadius.circular(24.0),
+                    borderRadius: new BorderRadius.circular(10.0),
                     child: Image(
                       fit: BoxFit.fill,
                       image: NetworkImage(_image),
@@ -136,7 +136,7 @@ class _PlaceListState extends State {
                   Container(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: myDetailsContainer1(restaurantName),
+                    child: placeBoxContainer(placeName),
                   ),
                 ),
               ],)
@@ -145,14 +145,14 @@ class _PlaceListState extends State {
       ),
   );
 }
-  Widget myDetailsContainer1(String restaurantName) {
+  Widget placeBoxContainer(String placeName) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(left: 8.0),
           child: Container(
-              child: Text(restaurantName,
+              child: Text(placeName,
             style: TextStyle(
                 color: Color(0xff6200ee),
                 fontSize: 24.0,
