@@ -9,6 +9,14 @@ class PlaceDetail extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(t.name??t.address),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.edit),
+            onPressed: (){
+              print('edit');
+            },
+          )
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
