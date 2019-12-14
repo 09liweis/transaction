@@ -21,8 +21,9 @@ class _PlaceForm extends State<PlaceForm> {
   final _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final addressController = TextEditingController();
-  final categoryController = TextEditingController();
-  final dateController = TextEditingController();
+  final placeIdController = TextEditingController();
+  final latController = TextEditingController();
+  final lngController = TextEditingController();
   Completer<GoogleMapController> _controller = Completer();
   CameraPosition _cameraPosition = CameraPosition(target: LatLng(0, 0),zoom: 10);
   Place _place;
@@ -41,9 +42,13 @@ class _PlaceForm extends State<PlaceForm> {
     _place = widget.place;
     nameController.text = _place.name??'';
     addressController.text = _place.address;
+    placeIdController.text = _place.placeId;
+    latController.text = _place.lat;
+    lngController.text = _place.lng;
     setState(() {
       var position = LatLng(double.parse(_place.lat),double.parse(_place.lng));
       _marker = Marker(
+        markerId: MarkerId(_place.placeId),
         position: position,
       );
       _cameraPosition = CameraPosition(target: position,zoom:18);
@@ -90,11 +95,39 @@ class _PlaceForm extends State<PlaceForm> {
                   },
                 ),
                 TextFormField(
-                  controller: categoryController,
-                  decoration: InputDecoration(labelText: 'Category'),
+                  controller: placeIdController,
+                  decoration: InputDecoration(labelText: 'Place Id'),
                   validator: (value){
                     if (value.isEmpty) {
-                      return 'Please enter category.';
+                      return 'Please enter placeId.';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    setState(() {
+                    });
+                  },
+                ),
+                TextFormField(
+                  controller: latController,
+                  decoration: InputDecoration(labelText: 'Lat'),
+                  validator: (value){
+                    if (value.isEmpty) {
+                      return 'Please enter lat.';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    setState(() {
+                    });
+                  },
+                ),
+                TextFormField(
+                  controller: lngController,
+                  decoration: InputDecoration(labelText: 'Lng'),
+                  validator: (value){
+                    if (value.isEmpty) {
+                      return 'Please enter lng.';
                     }
                     return null;
                   },
@@ -127,10 +160,11 @@ class _PlaceForm extends State<PlaceForm> {
                         var data = {
                           'name':nameController.text,
                           'address':addressController.text,
-                          'category':categoryController.text,
-                          'date':dateController.text,
+                          'place_id':placeIdController.text,
+                          'lat':latController.text,
+                          'lng':lngController.text
                         };
-                        API.postTransaction(data);
+                        API.upsertPlace(data);
                         Navigator.pop(context);
                       }
                     },
