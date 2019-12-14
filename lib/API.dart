@@ -23,4 +23,14 @@ class API {
   static Future getPlaces() {
     return http.get(baseUrl+'places');
   }
+  static Future upsertPlace(Map data) async {
+    var url = baseUrl + 'places';
+    var body = json.encode(data);
+    var response = await http.post(
+      url,
+      headers: {"Content-Type": "application/json"},
+      body: body
+    );
+    return response;
+  }
 }
