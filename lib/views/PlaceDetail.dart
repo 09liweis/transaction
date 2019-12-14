@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/Place.dart';
+import './PlaceForm.dart';
 class PlaceDetail extends StatelessWidget {
   final Place place;
   PlaceDetail({Key key, @required this.place}) : super(key: key);
@@ -13,7 +14,12 @@ class PlaceDetail extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.edit),
             onPressed: (){
-              print('edit');
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PlaceForm(place: place)
+                ),
+              );
             },
           )
         ],
