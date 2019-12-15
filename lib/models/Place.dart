@@ -1,13 +1,13 @@
 class Place {
-  String _id;
+  String id;
   String placeId;
   String name;
   String lat;
   String lng;
   String address;
 
-  Place(String _id, String placeId, String address, String name, String lat,String lng) {
-    this._id = _id;
+  Place(String id, String placeId, String address, String name, String lat,String lng) {
+    this.id = id;
     this.placeId = placeId;
     this.name = name;
     this.lat = lat;
@@ -16,7 +16,7 @@ class Place {
   }
 
   Place.fromJson(Map json)
-      : _id = json['_id'],
+      : id = json['_id'],
         placeId = json['place_id'],
         name = json['name'],
         lat = json['lat'],
@@ -24,6 +24,6 @@ class Place {
         lng = json['lng'];
 
   Map toJson() {
-    return {'_id': _id, 'place_id':placeId, 'name': name, 'address':address, 'lat': lat,'lng':lng};
+    return {'_id': id, 'place_id':placeId, 'name': name, 'address':address, 'lat': lat,'lng':lng};
   }
 }
