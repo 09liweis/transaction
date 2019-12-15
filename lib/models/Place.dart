@@ -1,3 +1,4 @@
+import './Transaction.dart';
 class Place {
   String id;
   String placeId;
@@ -5,6 +6,7 @@ class Place {
   String lat;
   String lng;
   String address;
+  List<Transaction> transactions;
 
   Place(String id, String placeId, String address, String name, String lat,String lng) {
     this.id = id;
@@ -15,7 +17,7 @@ class Place {
     this.address = address;
   }
 
-  Place.fromJson(Map json)
+  Place.fromJson(Map<String, dynamic> json)
       : id = json['_id'],
         placeId = json['place_id'],
         name = json['name'],
