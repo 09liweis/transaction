@@ -4,6 +4,7 @@ import '../API.dart';
 import '../models/Transaction.dart';
 import '../views/TransactionForm.dart';
 import '../views/TransactionDetail.dart';
+import '../widgets/Transactions.dart';
 class TransactionList extends StatefulWidget {
   @override
   createState() => _TransactionListState();
@@ -46,24 +47,7 @@ class _TransactionListState extends State {
   @override
   build(context) {
     return Scaffold(
-      body: ListView.builder(
-        padding: EdgeInsets.all(10),
-        itemCount: transactions.length,
-        itemBuilder: (context, index) {
-          var t = transactions[index];
-          return ListTile(
-            // leading: Text(t.category),
-            leading: Icon(Icons.category,size:30),
-            title: Text(t.title),
-            subtitle: Text(t.date),
-            trailing: Text(t.price.toString()),
-            enabled: true,
-            onTap:(){
-              _gotoDetail(t);
-            }
-          );
-        },
-      ),
+      body: WidgetTransactions(context, transactions),
       floatingActionButton: FloatingActionButton(
         onPressed: _gotoForm,
         tooltip: 'Increment',
