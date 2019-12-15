@@ -23,6 +23,9 @@ class API {
   static Future getPlaces() {
     return http.get(baseUrl+'places');
   }
+  static Future getPlace(String id) {
+    return http.get(baseUrl+'places'+id);
+  }
   static Future upsertPlace(Map data) async {
     var url = baseUrl + 'places';
     var body = json.encode(data);
