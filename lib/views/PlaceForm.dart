@@ -27,7 +27,7 @@ class _PlaceForm extends State<PlaceForm> {
   Completer<GoogleMapController> _controller = Completer();
   CameraPosition _cameraPosition = CameraPosition(target: LatLng(0, 0),zoom: 10);
   Place _place;
-  Marker _marker = new Marker();
+  Marker _marker;
 
   initState() {
     super.initState();
