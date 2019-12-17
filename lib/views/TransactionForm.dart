@@ -26,6 +26,11 @@ class _TransactionForm extends State {
   final priceController = TextEditingController();
   final categoryController = TextEditingController();
   final dateController = TextEditingController();
+  final placeNameController = TextEditingController();
+  final placeAddressController = TextEditingController();
+  final placeIdController = TextEditingController();
+  final placeLatController = TextEditingController();
+  final placeLngController = TextEditingController();
   Completer<GoogleMapController> _controller = Completer();
   List<Marker> _markers = <Marker>[];
   CameraPosition _cameraPosition = CameraPosition(target: LatLng(0, 0),zoom: 10);
@@ -146,6 +151,76 @@ class _TransactionForm extends State {
                     style: TextStyle(color: Colors.white),
                   )
                 ),
+                TextFormField(
+                  controller: placeNameController,
+                  decoration: InputDecoration(labelText: 'Place Name'),
+                  validator: (value){
+                    if (value.isEmpty) {
+                      return 'Please enter name.';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    setState(() {
+                    });
+                  },
+                ),
+                TextFormField(
+                  controller: placeAddressController,
+                  decoration: InputDecoration(labelText: 'Place Address'),
+                  validator: (value){
+                    if (value.isEmpty) {
+                      return 'Please enter address.';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    setState(() {
+                    });
+                  },
+                ),
+                TextFormField(
+                  controller: placeIdController,
+                  decoration: InputDecoration(labelText: 'Place Id'),
+                  validator: (value){
+                    if (value.isEmpty) {
+                      return 'Please enter placeid.';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    setState(() {
+                    });
+                  },
+                ),
+                TextFormField(
+                  controller: placeLatController,
+                  decoration: InputDecoration(labelText: 'Place Lat'),
+                  validator: (value){
+                    if (value.isEmpty) {
+                      return 'Please enter lat.';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    setState(() {
+                    });
+                  },
+                ),
+                TextFormField(
+                  controller: placeLngController,
+                  decoration: InputDecoration(labelText: 'Place Lng'),
+                  validator: (value){
+                    if (value.isEmpty) {
+                      return 'Please enter lng.';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    setState(() {
+                    });
+                  },
+                ),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height/3,
@@ -174,6 +249,13 @@ class _TransactionForm extends State {
                           'price':priceController.text,
                           'category':categoryController.text,
                           'date':dateController.text,
+                          'place':{
+                            'name':placeNameController.text,
+                            'address':placeAddressController.text,
+                            'lat':placeLatController.text,
+                            'lng':placeLngController.text,
+                            'place_id':placeIdController.text
+                          }
                         };
                         API.postTransaction(data);
                         Navigator.pop(context);
