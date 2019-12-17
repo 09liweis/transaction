@@ -6,7 +6,7 @@ import './PlaceForm.dart';
 import '../widgets/Transactions.dart';
 class PlaceDetail extends StatelessWidget {
   final Place place;
-  API api = API();
+  final API api = API();
   PlaceDetail({Key key, @required this.place}) : super(key: key);
   @override
   Widget build(BuildContext context) {
