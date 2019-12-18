@@ -15,6 +15,7 @@ Widget WidgetTransactions(context,transactions) {
           style:TextStyle(
             color: (t.price < 0)?Colors.red:Colors.green,
             fontWeight: FontWeight.bold,
+            fontSize: 20,
             fontFamily: ''
           )
         ),
