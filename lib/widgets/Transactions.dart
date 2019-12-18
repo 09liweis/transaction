@@ -13,7 +13,7 @@ Widget WidgetTransactions(context,transactions) {
         trailing: Text(
           t.price.toString(),
           style:TextStyle(
-            color: Colors.red
+            color: (t.price < 0)?Colors.red:Colors.green
           )
         ),
         enabled: true,
