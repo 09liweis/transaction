@@ -10,7 +10,12 @@ Widget WidgetTransactions(context,transactions) {
         leading: Icon(Icons.category,size:30),
         title: Text(t.title),
         subtitle: Text(t.date),
-        trailing: Text(t.price.toString()),
+        trailing: Text(
+          t.price.toString(),
+          style:TextStyle(
+            color: Colors.red
+          )
+        ),
         enabled: true,
         onTap:(){
           // _gotoDetail(t);
