@@ -8,13 +8,18 @@ Widget WidgetTransactions(context,transactions) {
       return ListTile(
         // leading: Text(t.category),
         leading: Icon(Icons.category,size:30),
-        title: Text(t.title),
+        title: Text(
+          t.title,
+          style:TextStyle(
+            color:Colors.blueGrey,
+            fontSize: 20,
+            fontWeight: FontWeight.bold
+          )),
         subtitle: Text(t.date),
         trailing: Text(
           t.price.toString(),
           style:TextStyle(
             color: (t.price < 0)?Colors.red:Colors.green,
-            fontWeight: FontWeight.bold,
             fontSize: 20,
           )
         ),
