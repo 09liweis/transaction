@@ -27,14 +27,6 @@ class _TransactionListState extends State {
       MaterialPageRoute(builder: (context) => TransactionForm()),
     );
   }
-  _gotoDetail(t) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => TransactionDetail(transaction: t)
-      ),
-    );
-  }
   initState() {
     super.initState();
     _getTransactions();
