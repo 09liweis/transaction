@@ -16,7 +16,6 @@ Widget WidgetTransactions(context,transactions) {
             color: (t.price < 0)?Colors.red:Colors.green,
             fontWeight: FontWeight.bold,
             fontSize: 20,
-            fontFamily: ''
           )
         ),
         enabled: true,
