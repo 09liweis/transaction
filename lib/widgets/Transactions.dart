@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../views/TransactionDetail.dart';
 Widget WidgetTransactions(context,transactions) {
   return ListView.builder(
     padding: EdgeInsets.all(10),
@@ -25,7 +26,12 @@ Widget WidgetTransactions(context,transactions) {
         ),
         enabled: true,
         onTap:(){
-          // _gotoDetail(t);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => TransactionDetail(transaction: t)
+            ),
+          );
         }
       );
     },
