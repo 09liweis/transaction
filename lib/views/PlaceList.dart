@@ -172,45 +172,9 @@ class _PlaceListState extends State {
               child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Container(
-                  child: Text(
-                "4.1",
-                style: TextStyle(
-                  color: Colors.black54,
-                  fontSize: 18.0,
-                ),
-              )),
               // Container(
               //   child: Icon(
               //     FontAwesomeIcons.solidStar,
-              //     color: Colors.amber,
-              //     size: 15.0,
-              //   ),
-              // ),
-              // Container(
-              //   child: Icon(
-              //     FontAwesomeIcons.solidStar,
-              //     color: Colors.amber,
-              //     size: 15.0,
-              //   ),
-              // ),
-              // Container(
-              //   child: Icon(
-              //     FontAwesomeIcons.solidStar,
-              //     color: Colors.amber,
-              //     size: 15.0,
-              //   ),
-              // ),
-              // Container(
-              //   child: Icon(
-              //     FontAwesomeIcons.solidStar,
-              //     color: Colors.amber,
-              //     size: 15.0,
-              //   ),
-              // ),
-              // Container(
-              //   child: Icon(
-              //     FontAwesomeIcons.solidStarHalf,
               //     color: Colors.amber,
               //     size: 15.0,
               //   ),
