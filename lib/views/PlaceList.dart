@@ -188,16 +188,7 @@ class _PlaceListState extends State {
                 ),
               )),
             ],
-          )),
-          SizedBox(height:5.0),
-        Container(
-            child: Text(
-          "Closed \u00B7 Opens 17:00 Thu",
-          style: TextStyle(
-              color: Colors.black54,
-              fontSize: 18.0,
-              fontWeight: FontWeight.bold),
-        )),
+          ))
       ],
     );
   }
