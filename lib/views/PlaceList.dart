@@ -160,12 +160,15 @@ class _PlaceListState extends State {
         Padding(
           padding: const EdgeInsets.only(left: 8.0),
           child: Container(
-              child: Text(placeName,
-            style: TextStyle(
+            child: Text(
+              placeName,
+              style: TextStyle(
                 color: Color(0xff6200ee),
                 fontSize: 24.0,
-                fontWeight: FontWeight.bold),
-          )),
+                fontWeight: FontWeight.bold
+              ),
+            )
+          ),
         ),
         SizedBox(height:5.0),
         Container(
