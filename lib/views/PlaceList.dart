@@ -169,7 +169,7 @@ class _PlaceListState extends State {
         ),
         SizedBox(height:5.0),
         Container(
-              child: Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               // Container(
@@ -180,15 +180,17 @@ class _PlaceListState extends State {
               //   ),
               // ),
                Container(
-                  child: Text(
-                "(946)",
-                style: TextStyle(
-                  color: Colors.black54,
-                  fontSize: 18.0,
-                ),
-              )),
+                child: Text(
+                  "(946)",
+                  style: TextStyle(
+                    color: Colors.black54,
+                    fontSize: 18.0,
+                  ),
+                )
+              ),
             ],
-          ))
+          )
+        )
       ],
     );
   }
