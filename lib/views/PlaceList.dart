@@ -143,7 +143,7 @@ class _PlaceListState extends State {
                 Container(
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: placeBoxContainer(placeName),
+                    child: placeBoxContainer(place),
                   ),
                 ),
               ]
@@ -153,7 +153,7 @@ class _PlaceListState extends State {
       ),
     );
   }
-  Widget placeBoxContainer(String placeName) {
+  Widget placeBoxContainer(Place place) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
@@ -161,7 +161,20 @@ class _PlaceListState extends State {
           padding: const EdgeInsets.only(left: 8.0),
           child: Container(
             child: Text(
-              placeName,
+              place.name??place.address,
+              style: TextStyle(
+                color: Color(0xff6200ee),
+                fontSize: 24.0,
+                fontWeight: FontWeight.bold
+              ),
+            )
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: Container(
+            child: Text(
+              place.address,
               style: TextStyle(
                 color: Color(0xff6200ee),
                 fontSize: 24.0,
@@ -175,13 +188,13 @@ class _PlaceListState extends State {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              // Container(
-              //   child: Icon(
-              //     FontAwesomeIcons.solidStar,
-              //     color: Colors.amber,
-              //     size: 15.0,
-              //   ),
-              // ),
+              Container(
+                child: Icon(
+                  Icons.star,
+                  color: Colors.amber,
+                  size: 15.0,
+                ),
+              ),
                Container(
                 child: Text(
                   "(946)",
