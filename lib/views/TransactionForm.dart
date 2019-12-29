@@ -40,25 +40,25 @@ class _TransactionForm extends State {
     geolocator
       .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
       .then((Position position) async {
-        final location = Location(position.latitude, position.longitude);
-        final result = await _places.searchNearbyWithRadius(location, 2500);
+        // final location = Location(position.latitude, position.longitude);
+        // final result = await _places.searchNearbyWithRadius(location, 2500);
         
-      setState(() {
-        result.results.forEach((f) {
-          final marker = Marker(
-            flat:true,
-            icon:BitmapDescriptor.defaultMarker,
-            markerId:MarkerId(f.placeId),
-            position: LatLng(f.geometry.location.lat, f.geometry.location.lng),
-            // infoWindow: InfoWindow(title:"${f.name}", "${f.types?.first}")
-            infoWindow: InfoWindow(
-              title: f.name, snippet: f.vicinity
-            ),
-          );
-          _markers.add(marker);
-        });
-        _cameraPosition = CameraPosition(target: LatLng(position.latitude, position.longitude),zoom: 10);
-      });
+      // setState(() {
+      //   result.results.forEach((f) {
+      //     final marker = Marker(
+      //       flat:true,
+      //       icon:BitmapDescriptor.defaultMarker,
+      //       markerId:MarkerId(f.placeId),
+      //       position: LatLng(f.geometry.location.lat, f.geometry.location.lng),
+      //       // infoWindow: InfoWindow(title:"${f.name}", "${f.types?.first}")
+      //       infoWindow: InfoWindow(
+      //         title: f.name, snippet: f.vicinity
+      //       ),
+      //     );
+      //     _markers.add(marker);
+      //   });
+      //   _cameraPosition = CameraPosition(target: LatLng(position.latitude, position.longitude),zoom: 10);
+      // });
     }).catchError((e) {
       print(e);
     });
@@ -166,8 +166,31 @@ class _TransactionForm extends State {
                   },
                 ),
                 RaisedButton(
-                  onPressed: () {
-                    print('Search Place');
+                  onPressed: () async {
+                    var searchPlaces = await _places.searchByText(placeNameController.text);
+                    setState(() {
+                      List<Marker> markers = <Marker>[];
+                      searchPlaces.results.forEach((f) {
+                        final marker = Marker(
+                          onTap: (){
+                            placeIdController.text = f.placeId;
+                            placeLatController.text = f.geometry.location.lat.toString();
+                            placeLngController.text = f.geometry.location.lng.toString();
+                            placeAddressController.text = f.formattedAddress;
+                            placeNameController.text = f.name;
+                          },
+                          flat:true,
+                          icon:BitmapDescriptor.defaultMarker,
+                          markerId:MarkerId(f.placeId),
+                          position: LatLng(f.geometry.location.lat, f.geometry.location.lng),
+                          infoWindow: InfoWindow(
+                            title: f.name, snippet: f.vicinity
+                          ),
+                        );
+                        markers.add(marker);
+                      });
+                      _markers = markers;
+                    });
                   },
                   textColor: Colors.white,
                   padding: const EdgeInsets.all(0.0),
