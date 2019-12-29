@@ -12,7 +12,8 @@ Widget WidgetTransactions(context,transactions) {
           style: TextStyle(
             color: Colors.brown,
             fontWeight: FontWeight.bold,
-            fontStyle: FontStyle.italic
+            fontStyle: FontStyle.italic,
+            letterSpacing: 1.4
           ),
           ),
         title: Text(
