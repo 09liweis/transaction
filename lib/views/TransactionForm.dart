@@ -15,6 +15,8 @@ const kGoogleApiKey = 'AIzaSyA74jvNet0DufU8aoTe39dELLy2rVMeuos';
 GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: kGoogleApiKey);
 
 class TransactionForm extends StatefulWidget {
+  final Transaction transaction;
+  TransactionForm({Key key, @required this.transaction}) : super(key: key);
   @override
   createState() => _TransactionForm();
 }
