@@ -7,8 +7,14 @@ Widget WidgetTransactions(context,transactions) {
     itemBuilder: (context, index) {
       var t = transactions[index];
       return ListTile(
-        // leading: Text(t.category),
-        leading: Icon(Icons.category,size:30),
+        leading: Text(
+          t.category,
+          style: TextStyle(
+            color: Colors.brown,
+            fontWeight: FontWeight.bold,
+            fontStyle: FontStyle.italic
+          ),
+          ),
         title: Text(
           t.title,
           style:TextStyle(
