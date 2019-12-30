@@ -24,7 +24,7 @@ class _TransactionListState extends State {
   _gotoForm() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => TransactionForm()),
+      MaterialPageRoute(builder: (context) => TransactionForm(transaction:new Transaction('', '', '', '', ''))),
     );
   }
   initState() {
