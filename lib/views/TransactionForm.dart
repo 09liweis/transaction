@@ -9,6 +9,7 @@ import 'package:google_maps_webservice/places.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:location/location.dart' as LocationManager;
 import '../models/Transaction.dart';
+import '../models/Place.dart';
 import 'package:geolocator/geolocator.dart';
 
 const kGoogleApiKey = 'AIzaSyA74jvNet0DufU8aoTe39dELLy2rVMeuos';
@@ -21,9 +22,9 @@ class TransactionForm extends StatefulWidget {
   createState() => _TransactionForm();
 }
 
-class _TransactionForm extends State {
+class _TransactionForm extends State<TransactionForm> {
   final _formKey = GlobalKey<FormState>();
-  // final _transaction = Transaction();
+  Transaction _transaction;
   final titleController = TextEditingController();
   final priceController = TextEditingController();
   final categoryController = TextEditingController();
@@ -75,7 +76,22 @@ class _TransactionForm extends State {
   }
 
   @override
-  build(context) {
+  Widget build(context) {
+    _transaction = widget.transaction;
+    if (_transaction.title.isNotEmpty) {
+      titleController.text = _transaction.title;
+      priceController.text = _transaction.price.toString();
+      categoryController.text = _transaction.category;
+      dateController.text = _transaction.date;
+      Place place = _transaction.place;
+      // if () {
+      //   placeNameController.text = place.name;
+      //   placeAddressController.text = place.address;
+      //   placeIdController.text = place.placeId;
+      //   placeLatController.text = place.lat;
+      //   placeLngController.text = place.lng;
+      // }
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text("Transaction Form"),
@@ -149,7 +165,7 @@ class _TransactionForm extends State {
                     );
                   },
                   child: Text(
-                    'Pick a date',
+                    dateController.text??'Pick a date',
                     style: TextStyle(color: Colors.white),
                   )
                 ),
