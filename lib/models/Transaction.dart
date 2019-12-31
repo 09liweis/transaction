@@ -1,14 +1,14 @@
 import './Place.dart';
 class Transaction {
-  String _id;
+  String id;
   String title;
   String date;
   String category;
   dynamic price;
   Place place;
 
-  Transaction(String _id, dynamic price, String title, String date,String category) {
-    this._id = _id;
+  Transaction(String id, dynamic price, String title, String date,String category) {
+    this.id = id;
     this.title = title;
     this.date = date;
     this.category = category;
@@ -16,13 +16,13 @@ class Transaction {
   }
 
   Transaction.fromJson(Map json)
-    : _id = json['_id'],
+    : id = json['_id'],
     title = json['title'],
     date = json['date'],
     price = json['price'],
     category = json['category'];
 
   Map toJson() {
-    return {'_id': _id, 'title': title, 'price':price, 'date': date,'category':category};
+    return {'_id': id, 'title': title, 'price':price, 'date': date,'category':category};
   }
 }
