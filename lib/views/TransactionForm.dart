@@ -29,6 +29,7 @@ class _TransactionForm extends State<TransactionForm> {
   final priceController = TextEditingController();
   final categoryController = TextEditingController();
   final dateController = TextEditingController();
+  String _date = '';
   final placeNameController = TextEditingController();
   final placeAddressController = TextEditingController();
   final placeIdController = TextEditingController();
@@ -148,12 +149,13 @@ class _TransactionForm extends State<TransactionForm> {
                         String finalDate = date.toString().substring(0,10);
                         setState(() {
                           dateController.text = finalDate;
+                          _date = finalDate;
                         });
                       }
                     );
                   },
                   child: Text(
-                    dateController.text??'Pick a date',
+                    _date??'Pick a date',
                     style: TextStyle(color: Colors.white),
                   )
                 ),
