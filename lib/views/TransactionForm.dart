@@ -36,32 +36,20 @@ class _TransactionForm extends State<TransactionForm> {
   final placeLngController = TextEditingController();
   Completer<GoogleMapController> _controller = Completer();
   List<Marker> _markers = <Marker>[];
-  CameraPosition _cameraPosition = CameraPosition(target: LatLng(0, 0),zoom: 10);
+  CameraPosition _cameraPosition;
 
   _getCurrentLocation() {
     final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
     geolocator
       .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
-      .then((Position position) async {
+      .then((Position position) {
         // final location = Location(position.latitude, position.longitude);
         // final result = await _places.searchNearbyWithRadius(location, 2500);
         
-      // setState(() {
-      //   result.results.forEach((f) {
-      //     final marker = Marker(
-      //       flat:true,
-      //       icon:BitmapDescriptor.defaultMarker,
-      //       markerId:MarkerId(f.placeId),
-      //       position: LatLng(f.geometry.location.lat, f.geometry.location.lng),
-      //       // infoWindow: InfoWindow(title:"${f.name}", "${f.types?.first}")
-      //       infoWindow: InfoWindow(
-      //         title: f.name, snippet: f.vicinity
-      //       ),
-      //     );
-      //     _markers.add(marker);
-      //   });
-      //   _cameraPosition = CameraPosition(target: LatLng(position.latitude, position.longitude),zoom: 10);
-      // });
+      setState(() {
+        print(position);
+        _cameraPosition = CameraPosition(target: LatLng(position.latitude, position.longitude),zoom: 10);
+      });
     }).catchError((e) {
       print(e);
     });
@@ -78,19 +66,19 @@ class _TransactionForm extends State<TransactionForm> {
   @override
   Widget build(context) {
     _transaction = widget.transaction;
-    if (_transaction.title.isNotEmpty) {
+    if (_transaction != null) {
       titleController.text = _transaction.title;
       priceController.text = _transaction.price.toString();
       categoryController.text = _transaction.category;
       dateController.text = _transaction.date;
       Place place = _transaction.place;
-      // if () {
-      //   placeNameController.text = place.name;
-      //   placeAddressController.text = place.address;
-      //   placeIdController.text = place.placeId;
-      //   placeLatController.text = place.lat;
-      //   placeLngController.text = place.lng;
-      // }
+      if (place != null) {
+        placeNameController.text = place.name;
+        placeAddressController.text = place.address;
+        placeIdController.text = place.placeId;
+        placeLatController.text = place.lat;
+        placeLngController.text = place.lng;
+      }
     }
     return Scaffold(
       appBar: AppBar(
@@ -288,7 +276,7 @@ class _TransactionForm extends State<TransactionForm> {
                 Container(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height/4,
-                  child: GoogleMap(
+                  child: (_cameraPosition != null)?GoogleMap(
                     myLocationEnabled:true,
                     myLocationButtonEnabled:true,
                     mapType: MapType.normal,
@@ -297,6 +285,8 @@ class _TransactionForm extends State<TransactionForm> {
                       _controller.complete(controller);
                     },
                     markers:Set<Marker>.of(_markers),
+                  ):Center(
+                    child: Text('Loading Map'),
                   ),
                 ),
                 Padding(
