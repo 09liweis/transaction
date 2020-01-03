@@ -180,6 +180,22 @@ class _TransactionForm extends State<TransactionForm> {
                     style: TextStyle(color: Colors.white),
                   )
                 ),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height/4,
+                  child: (_cameraPosition != null)?GoogleMap(
+                    myLocationEnabled:true,
+                    myLocationButtonEnabled:true,
+                    mapType: MapType.normal,
+                    initialCameraPosition: _cameraPosition,
+                    onMapCreated: (GoogleMapController controller) {
+                      _controller.complete(controller);
+                    },
+                    markers:Set<Marker>.of(_markers),
+                  ):Center(
+                    child: Text('Loading Map'),
+                  ),
+                ),
                 TextFormField(
                   controller: placeNameController,
                   decoration: InputDecoration(labelText: 'Place Name'),
@@ -272,22 +288,6 @@ class _TransactionForm extends State<TransactionForm> {
                     });
                   },
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height/4,
-                  child: (_cameraPosition != null)?GoogleMap(
-                    myLocationEnabled:true,
-                    myLocationButtonEnabled:true,
-                    mapType: MapType.normal,
-                    initialCameraPosition: _cameraPosition,
-                    onMapCreated: (GoogleMapController controller) {
-                      _controller.complete(controller);
-                    },
-                    markers:Set<Marker>.of(_markers),
-                  ):Center(
-                    child: Text('Loading Map'),
-                  ),
-                )
               ]
             )
           )
