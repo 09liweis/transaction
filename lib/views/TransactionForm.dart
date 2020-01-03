@@ -297,6 +297,7 @@ class _TransactionForm extends State<TransactionForm> {
         onPressed:() {
           if (_formKey.currentState.validate()) {
             // If the form is valid, display a Snackbar.
+            String message = 'Added';
             var data = {
               'title':titleController.text,
               'price':priceController.text,
@@ -311,10 +312,11 @@ class _TransactionForm extends State<TransactionForm> {
               }
             };
             if (_transaction != null) {
+              message = 'Updated';
               data['_id'] = _transaction.id;
             }
             API.upsertTransaction(data).then((res){
-              Navigator.pop(context);
+              Navigator.pop(context,{'msg':message});
             });
           }
         },
