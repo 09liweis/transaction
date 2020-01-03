@@ -22,18 +22,19 @@ class API {
     );
     return response;
   }
-  static Future<Transaction> getTransaction(String id) async {
+  static Future<Transaction> getTransaction(String id) {
     var url = baseUrl + 'transactions/'+id;
-    final response = await http.get(url);
-    if (response.statusCode == 200) {
-      var transactionJson = json.decode(response.body);
-      var transaction = Transaction.fromJson(transactionJson);
-      Place place = Place.fromJson(transactionJson['place']);
-      transaction.place = place;
-      return transaction;
-    } else {
-      throw Exception('Failed to load Transaction');
-    }
+    return http.get(url).then((response){
+      if (response.statusCode == 200) {
+        var transactionJson = json.decode(response.body);
+        var transaction = Transaction.fromJson(transactionJson);
+        Place place = Place.fromJson(transactionJson['place']);
+        transaction.place = place;
+        return transaction;
+      } else {
+        throw Exception('Failed to load Transaction');
+      }
+    });
   }
   static Future getPlaces() {
     return http.get(baseUrl+'places');
