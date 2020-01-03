@@ -13,13 +13,25 @@ class API {
     var url = baseUrl + "transactions";
     return http.get(url);
   }
-  static Future postTransaction(Map data) async {
+  static Future upsertTransaction(Map data) async {
     var url = baseUrl + 'transactions';
+    var method = 'post';
+    if (data['_id'] != null) {
+      url+='/'+data['_id'];
+      method = 'put';
+    }
     var body = json.encode(data);
-    var response = await http.post(url,
-      headers: {"Content-Type": "application/json"},
-      body: body
-    );
+    var response;
+    if (method == 'post'){
+      response = await http.post(url,
+        headers: {"Content-Type": "application/json"},
+        body: body
+      );
+    } else {
+      response = await http.put(url,
+      headers:{'Content-Type':'application/json'},
+      body:body);
+    }
     return response;
   }
   static Future<Transaction> getTransaction(String id) {
