@@ -30,6 +30,7 @@ class _TransactionForm extends State<TransactionForm> {
   final categoryController = TextEditingController();
   final dateController = TextEditingController();
   String _date = '';
+  bool _placeLoaded = false;
   final placeNameController = TextEditingController();
   final placeAddressController = TextEditingController();
   final placeIdController = TextEditingController();
@@ -74,28 +75,32 @@ class _TransactionForm extends State<TransactionForm> {
       setState(() {
         _date = _transaction.date;
       });
-      API.getTransaction(_transaction.id).then((res){
-        Place place = res.place;
-        if (place != null) {
-          placeNameController.text = place.name;
-          placeAddressController.text = place.address;
-          placeIdController.text = place.placeId;
-          placeLatController.text = place.lat;
-          placeLngController.text = place.lng;
-          setState(() {
-            final marker = Marker(
-              flat:true,
-              icon:BitmapDescriptor.defaultMarker,
-              markerId:MarkerId(place.placeId),
-              position: LatLng(double.parse(place.lat), double.parse(place.lng)),
-              infoWindow: InfoWindow(
-                title: place.name
-              ),
-            );
-            _markers.add(marker);
-          });
-        }
-      });
+      if (_placeLoaded == false) {
+        API.getTransaction(_transaction.id).then((res){
+          _placeLoaded = true;
+          print(res.place);
+          Place place = res.place;
+          if (place != null) {
+            placeNameController.text = place.name;
+            placeAddressController.text = place.address;
+            placeIdController.text = place.placeId;
+            placeLatController.text = place.lat;
+            placeLngController.text = place.lng;
+            setState(() {
+              final marker = Marker(
+                flat:true,
+                icon:BitmapDescriptor.defaultMarker,
+                markerId:MarkerId(place.placeId),
+                position: LatLng(double.parse(place.lat), double.parse(place.lng)),
+                infoWindow: InfoWindow(
+                  title: place.name
+                ),
+              );
+              _markers.add(marker);
+            });
+          }
+        });
+      }
     }
     return Scaffold(
       appBar: AppBar(
@@ -329,7 +334,10 @@ class _TransactionForm extends State<TransactionForm> {
                             'place_id':placeIdController.text
                           }
                         };
-                        API.postTransaction(data);
+                        if (_transaction != null) {
+                          data['_id'] = _transaction.id;
+                        }
+                        API.upsertTransaction(data);
                         Navigator.pop(context);
                       }
                     },
