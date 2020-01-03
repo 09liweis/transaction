@@ -34,6 +34,10 @@ class API {
     }
     return response;
   }
+  static deleteTransaction(String id) {
+    var url = baseUrl + 'transactions/'+id;
+    return http.delete(url);
+  }
   static Future<Transaction> getTransaction(String id) {
     var url = baseUrl + 'transactions/'+id;
     return http.get(url).then((response){
