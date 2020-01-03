@@ -36,7 +36,7 @@ class PlaceDetail extends StatelessWidget {
               Place p = snapshot.data;
               var transactions = p.transactions;
               return (
-                WidgetTransactions(context, transactions)
+                WidgetTransactions(context, transactions,null)
               );
             } else if (snapshot.hasError) {
               return Center(

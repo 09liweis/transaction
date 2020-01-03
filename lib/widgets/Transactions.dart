@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../views/TransactionDetail.dart';
-Widget WidgetTransactions(context,transactions) {
+Widget WidgetTransactions(context,transactions,_deleteTransaction) {
   return ListView.builder(
     padding: EdgeInsets.all(10),
     itemCount: transactions.length,
@@ -32,6 +32,11 @@ Widget WidgetTransactions(context,transactions) {
           )
         ),
         enabled: true,
+        onLongPress: (){
+          if (_deleteTransaction != null) {
+            _deleteTransaction(t);
+          }
+        },
         onTap:(){
           Navigator.push(
             context,

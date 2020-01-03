@@ -31,6 +31,39 @@ class _TransactionListState extends State {
     super.initState();
     _getTransactions();
   }
+  _deleteTransaction(Transaction t) {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Delete Transaction'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('You are about to detele '+t.title)
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Regret'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text('Confirm'),
+              onPressed: () {
+                API.deleteTransaction(t.id);
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   dispose() {
     super.dispose();
@@ -39,7 +72,7 @@ class _TransactionListState extends State {
   @override
   build(context) {
     return Scaffold(
-      body: WidgetTransactions(context, transactions),
+      body: WidgetTransactions(context, transactions, _deleteTransaction),
       floatingActionButton: FloatingActionButton(
         onPressed: _gotoForm,
         tooltip: 'Increment',
