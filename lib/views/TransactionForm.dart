@@ -243,12 +243,6 @@ class _TransactionForm extends State<TransactionForm> {
                 TextFormField(
                   controller: placeAddressController,
                   decoration: InputDecoration(labelText: 'Place Address'),
-                  validator: (value){
-                    if (value.isEmpty) {
-                      return 'Please enter address.';
-                    }
-                    return null;
-                  },
                   onSaved: (value) {
                     setState(() {
                     });
@@ -257,12 +251,6 @@ class _TransactionForm extends State<TransactionForm> {
                 TextFormField(
                   controller: placeIdController,
                   decoration: InputDecoration(labelText: 'Place Id'),
-                  validator: (value){
-                    if (value.isEmpty) {
-                      return 'Please enter placeid.';
-                    }
-                    return null;
-                  },
                   onSaved: (value) {
                     setState(() {
                     });
@@ -271,12 +259,6 @@ class _TransactionForm extends State<TransactionForm> {
                 TextFormField(
                   controller: placeLatController,
                   decoration: InputDecoration(labelText: 'Place Lat'),
-                  validator: (value){
-                    if (value.isEmpty) {
-                      return 'Please enter lat.';
-                    }
-                    return null;
-                  },
                   onSaved: (value) {
                     setState(() {
                     });
@@ -285,12 +267,6 @@ class _TransactionForm extends State<TransactionForm> {
                 TextFormField(
                   controller: placeLngController,
                   decoration: InputDecoration(labelText: 'Place Lng'),
-                  validator: (value){
-                    if (value.isEmpty) {
-                      return 'Please enter lng.';
-                    }
-                    return null;
-                  },
                   onSaved: (value) {
                     setState(() {
                     });
@@ -311,45 +287,40 @@ class _TransactionForm extends State<TransactionForm> {
                   ):Center(
                     child: Text('Loading Map'),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  child: RaisedButton(
-                    onPressed: () {
-                      // Validate returns true if the form is valid, or false
-                      // otherwise.
-                      if (_formKey.currentState.validate()) {
-                        // If the form is valid, display a Snackbar.
-                        Scaffold.of(context).showSnackBar(SnackBar(content: Text('Processing Data')));
-                        var data = {
-                          'title':titleController.text,
-                          'price':priceController.text,
-                          'category':categoryController.text,
-                          'date':dateController.text,
-                          'place':{
-                            'name':placeNameController.text,
-                            'address':placeAddressController.text,
-                            'lat':placeLatController.text,
-                            'lng':placeLngController.text,
-                            'place_id':placeIdController.text
-                          }
-                        };
-                        if (_transaction != null) {
-                          data['_id'] = _transaction.id;
-                        }
-                        API.upsertTransaction(data);
-                        Navigator.pop(context);
-                      }
-                    },
-                    child: Text('Submit'),
-                  ),
-                ),
+                )
               ]
             )
           )
         ),
-      )
-
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed:() {
+          if (_formKey.currentState.validate()) {
+            // If the form is valid, display a Snackbar.
+            var data = {
+              'title':titleController.text,
+              'price':priceController.text,
+              'category':categoryController.text,
+              'date':dateController.text,
+              'place':{
+                'name':placeNameController.text,
+                'address':placeAddressController.text,
+                'lat':placeLatController.text,
+                'lng':placeLngController.text,
+                'place_id':placeIdController.text
+              }
+            };
+            if (_transaction != null) {
+              data['_id'] = _transaction.id;
+            }
+            API.upsertTransaction(data).then((res){
+              Navigator.pop(context);
+            });
+          }
+        },
+        tooltip: 'Increment',
+        child: Icon(Icons.add),
+      ),
     );
         
   }
