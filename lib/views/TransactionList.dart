@@ -21,11 +21,14 @@ class _TransactionListState extends State {
       });
     });
   }
-  _gotoForm() {
-    Navigator.push(
+  Future _gotoForm() async {
+    var result = await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => TransactionForm(transaction:null)),
     );
+    if (result!=null){
+      Scaffold.of(context).showSnackBar(SnackBar(content: Text(result['msg']),duration: Duration(seconds: 3),));
+    }
   }
   initState() {
     super.initState();
