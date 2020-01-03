@@ -48,7 +48,6 @@ class _TransactionForm extends State<TransactionForm> {
         // final result = await _places.searchNearbyWithRadius(location, 2500);
         
       setState(() {
-        print(position);
         _cameraPosition = CameraPosition(target: LatLng(position.latitude, position.longitude),zoom: 10);
       });
     }).catchError((e) {
@@ -72,14 +71,31 @@ class _TransactionForm extends State<TransactionForm> {
       priceController.text = _transaction.price.toString();
       categoryController.text = _transaction.category;
       dateController.text = _transaction.date;
-      Place place = _transaction.place;
-      if (place != null) {
-        placeNameController.text = place.name;
-        placeAddressController.text = place.address;
-        placeIdController.text = place.placeId;
-        placeLatController.text = place.lat;
-        placeLngController.text = place.lng;
-      }
+      setState(() {
+        _date = _transaction.date;
+      });
+      API.getTransaction(_transaction.id).then((res){
+        Place place = res.place;
+        if (place != null) {
+          placeNameController.text = place.name;
+          placeAddressController.text = place.address;
+          placeIdController.text = place.placeId;
+          placeLatController.text = place.lat;
+          placeLngController.text = place.lng;
+          setState(() {
+            final marker = Marker(
+              flat:true,
+              icon:BitmapDescriptor.defaultMarker,
+              markerId:MarkerId(place.placeId),
+              position: LatLng(double.parse(place.lat), double.parse(place.lng)),
+              infoWindow: InfoWindow(
+                title: place.name
+              ),
+            );
+            _markers.add(marker);
+          });
+        }
+      });
     }
     return Scaffold(
       appBar: AppBar(
