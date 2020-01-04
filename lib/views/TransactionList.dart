@@ -11,13 +11,13 @@ class TransactionList extends StatefulWidget {
 }
 
 class _TransactionListState extends State {
-  var transactions = new List<Transaction>();
+  var _transactions = new List<Transaction>();
 
-  _getTransactions() {
+  Future<void> _getTransactions() async {
     API.getTransactions().then((response) {
       setState(() {
         Iterable list = json.decode(response.body);
-        transactions = list.map((model) => Transaction.fromJson(model)).toList();
+        _transactions = list.map((model) => Transaction.fromJson(model)).toList();
       });
     });
   }
@@ -75,7 +75,10 @@ class _TransactionListState extends State {
   @override
   build(context) {
     return Scaffold(
-      body: WidgetTransactions(context, transactions, _deleteTransaction),
+      body: new RefreshIndicator(
+        child:WidgetTransactions(context, _transactions, _deleteTransaction),
+        onRefresh: _getTransactions,
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: _gotoForm,
         tooltip: 'Increment',
