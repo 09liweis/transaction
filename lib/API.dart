@@ -32,7 +32,15 @@ class API {
       headers:{'Content-Type':'application/json'},
       body:body);
     }
-    return response;
+    if (response.statusCode == 200) {
+      var transactionJson = json.decode(response.body);
+      var transaction = Transaction.fromJson(transactionJson);
+      Place place = Place.fromJson(transactionJson['place']);
+      transaction.place = place;
+      return transaction;
+    } else {
+      return null;
+    }
   }
   static deleteTransaction(String id) {
     var url = baseUrl + 'transactions/'+id;
