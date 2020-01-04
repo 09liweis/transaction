@@ -316,7 +316,7 @@ class _TransactionForm extends State<TransactionForm> {
               data['_id'] = _transaction.id;
             }
             API.upsertTransaction(data).then((res){
-              Navigator.pop(context,{'msg':message});
+              Navigator.pop(context,{'msg':message,'ret':res});
             });
           }
         },
