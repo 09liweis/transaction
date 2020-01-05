@@ -55,6 +55,32 @@ class _TransactionForm extends State<TransactionForm> {
       print(e);
     });
   }
+  _searchPlaces() async {
+    var searchPlaces = await _places.searchByText(placeNameController.text);
+    setState(() {
+      List<Marker> markers = <Marker>[];
+      searchPlaces.results.forEach((f) {
+        final marker = Marker(
+          onTap: (){
+            placeIdController.text = f.placeId;
+            placeLatController.text = f.geometry.location.lat.toString();
+            placeLngController.text = f.geometry.location.lng.toString();
+            placeAddressController.text = f.formattedAddress;
+            placeNameController.text = f.name;
+          },
+          flat:true,
+          icon:BitmapDescriptor.defaultMarker,
+          markerId:MarkerId(f.placeId),
+          position: LatLng(f.geometry.location.lat, f.geometry.location.lng),
+          infoWindow: InfoWindow(
+            title: f.name, snippet: f.vicinity
+          ),
+        );
+        markers.add(marker);
+      });
+      _markers = markers;
+    });
+  }
   initState() {
     super.initState();
     _getCurrentLocation();
@@ -188,6 +214,7 @@ class _TransactionForm extends State<TransactionForm> {
                     myLocationButtonEnabled:true,
                     mapType: MapType.normal,
                     initialCameraPosition: _cameraPosition,
+                    // cameraTargetBounds: CameraTargetBounds(_bounds),
                     onMapCreated: (GoogleMapController controller) {
                       _controller.complete(controller);
                     },
@@ -211,32 +238,7 @@ class _TransactionForm extends State<TransactionForm> {
                   },
                 ),
                 RaisedButton(
-                  onPressed: () async {
-                    var searchPlaces = await _places.searchByText(placeNameController.text);
-                    setState(() {
-                      List<Marker> markers = <Marker>[];
-                      searchPlaces.results.forEach((f) {
-                        final marker = Marker(
-                          onTap: (){
-                            placeIdController.text = f.placeId;
-                            placeLatController.text = f.geometry.location.lat.toString();
-                            placeLngController.text = f.geometry.location.lng.toString();
-                            placeAddressController.text = f.formattedAddress;
-                            placeNameController.text = f.name;
-                          },
-                          flat:true,
-                          icon:BitmapDescriptor.defaultMarker,
-                          markerId:MarkerId(f.placeId),
-                          position: LatLng(f.geometry.location.lat, f.geometry.location.lng),
-                          infoWindow: InfoWindow(
-                            title: f.name, snippet: f.vicinity
-                          ),
-                        );
-                        markers.add(marker);
-                      });
-                      _markers = markers;
-                    });
-                  },
+                  onPressed: _searchPlaces,
                   textColor: Colors.white,
                   padding: const EdgeInsets.all(0.0),
                   child: Container(
