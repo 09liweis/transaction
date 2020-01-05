@@ -9,9 +9,11 @@ const baseUrl = "https://samliweisen.herokuapp.com/api/";
 // const baseUrl = "http://localhost:8081/api/";
 
 class API {
-  static Future getTransactions() {
+  static Future getTransactions() async {
     var url = baseUrl + "transactions";
-    return http.get(url);
+    var response = await http.get(url);
+    Iterable list = json.decode(response.body);
+    return list.map((model) => Transaction.fromJson(model)).toList();
   }
   static Future upsertTransaction(Map data) async {
     var url = baseUrl + 'transactions';
