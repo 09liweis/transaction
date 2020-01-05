@@ -62,8 +62,10 @@ class API {
       }
     });
   }
-  static Future getPlaces() {
-    return http.get(baseUrl+'places');
+  static Future getPlaces() async {
+    var response = await http.get(baseUrl+'places');
+    Iterable list = json.decode(response.body);
+    return list.map((model) => Place.fromJson(model)).toList();
   }
   Future<Place> getPlace(String id) async {
     var url = baseUrl+'places/'+id;
