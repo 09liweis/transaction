@@ -14,11 +14,9 @@ class _TransactionListState extends State {
   var _transactions = new List<Transaction>();
 
   Future<void> _getTransactions() async {
-    API.getTransactions().then((response) {
-      setState(() {
-        Iterable list = json.decode(response.body);
-        _transactions = list.map((model) => Transaction.fromJson(model)).toList();
-      });
+    var transactions = await API.getTransactions();
+    setState(() {
+      _transactions = transactions;
     });
   }
   Future _gotoForm() async {
