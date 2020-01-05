@@ -12,28 +12,28 @@ class PlaceList extends StatefulWidget {
 }
 
 class _PlaceListState extends State {
-  var places = new List<Place>();
+  var _places = new List<Place>();
   List<Marker> _markers = <Marker>[];
   Completer<GoogleMapController> _controller = Completer();
-  _getPlaces() {
-    API.getPlaces().then((response) {
-      setState(() {
-        Iterable list = json.decode(response.body);
-        places = list.map((model) => Place.fromJson(model)).toList();
-        places.forEach((p) {
-          final marker = Marker(
-            flat:true,
-            icon:BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
-            markerId:MarkerId(p.placeId),
-            position: LatLng(double.parse(p.lat), double.parse(p.lng)),
-            // infoWindow: InfoWindow(title:"${p.name}", "${p.types?.first}")
-            infoWindow: InfoWindow(
-              title: p.name??p.address
-            ),
-          );
-          _markers.add(marker);
-        });
-      });
+  _getPlaces() async {
+    var places = await API.getPlaces();
+    var markers = <Marker>[];
+    places.forEach((p) {
+      final marker = Marker(
+        flat:true,
+        icon:BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
+        markerId:MarkerId(p.placeId),
+        position: LatLng(double.parse(p.lat), double.parse(p.lng)),
+        // infoWindow: InfoWindow(title:"${p.name}", "${p.types?.first}")
+        infoWindow: InfoWindow(
+          title: p.name??p.address
+        ),
+      );
+      markers.add(marker);
+    });
+    setState(() {
+      _places = places;
+      _markers = markers;
     });
   }
   _gotoDetail(p) {
@@ -77,9 +77,9 @@ class _PlaceListState extends State {
         height: 150.0,
         child:ListView.builder(
           scrollDirection:Axis.horizontal,
-          itemCount: places.length,
+          itemCount: _places.length,
           itemBuilder: (context,index) {
-            var p = places[index];
+            var p = _places[index];
             return _placeBox(p);
           },
         )
