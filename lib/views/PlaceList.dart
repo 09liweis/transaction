@@ -111,7 +111,6 @@ class _PlaceListState extends State {
     String _image = "https://lh5.googleusercontent.com/p/AF1QipO3VPL9m-b355xWeg4MXmOQTauFAEkavSluTtJU=w225-h160-k-no";
     double lat = double.parse(place.lat);
     double lng = double.parse(place.lng);
-    String placeName = place.name??'No Name';
     return  GestureDetector(
       onTap: () {
         _gotoDetail(place);
@@ -197,7 +196,7 @@ class _PlaceListState extends State {
               ),
                Container(
                 child: Text(
-                  "(946)",
+                  place.rating??'No Rating',
                   style: TextStyle(
                     color: Colors.black54,
                     fontSize: 18.0,
