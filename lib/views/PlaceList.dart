@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:convert';
@@ -97,6 +96,8 @@ class _PlaceListState extends State {
           _controller.complete(controller);
         },
         markers:Set<Marker>.of(_markers),
+        myLocationEnabled:true,
+        myLocationButtonEnabled:true,
       )
     );
   }
@@ -157,25 +158,13 @@ class _PlaceListState extends State {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(left: 8.0),
+          padding: const EdgeInsets.only(left: 9.0),
           child: Container(
+            width:300.0,
             child: Text(
               place.name??place.address,
+              textAlign:TextAlign.center,
               style: TextStyle(
-                color: Color(0xff6200ee),
-                fontSize: 24.0,
-                fontWeight: FontWeight.bold
-              ),
-            )
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 8.0),
-          child: Container(
-            child: Text(
-              place.address,
-              style: TextStyle(
-                color: Color(0xff6200ee),
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold
               ),
@@ -196,7 +185,7 @@ class _PlaceListState extends State {
               ),
                Container(
                 child: Text(
-                  place.rating??'No Rating',
+                  place.rating.toString()??'No Rating',
                   style: TextStyle(
                     color: Colors.black54,
                     fontSize: 18.0,
