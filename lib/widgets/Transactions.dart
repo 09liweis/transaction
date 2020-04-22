@@ -17,7 +17,7 @@ Widget WidgetTransactions(context,transactions,_deleteTransaction) {
           ),
           ),
         title: Text(
-          t.title,
+          t.title??'',
           style:TextStyle(
             color:Colors.blueGrey,
             fontSize: 20,
