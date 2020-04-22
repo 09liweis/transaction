@@ -6,13 +6,15 @@ class Place {
   String lat;
   String lng;
   String address;
+  String icon;
   dynamic rating;
   List<Transaction> transactions;
 
-  Place(String id, String placeId, String address, String name, dynamic rating, String lat,String lng) {
+  Place(String id, String placeId, String icon, String address, String name, dynamic rating, String lat,String lng) {
     this.id = id;
     this.rating = rating;
     this.placeId = placeId;
+    this.icon = icon;
     this.name = name;
     this.lat = lat;
     this.lng = lng;
@@ -26,9 +28,10 @@ class Place {
         name = json['name'],
         lat = json['lat'],
         address = json['address'],
-        lng = json['lng'];
+        lng = json['lng'],
+        icon = json['icon'];
 
   Map toJson() {
-    return {'_id': id,'rating':rating, 'place_id':placeId, 'name': name, 'address':address, 'lat': lat,'lng':lng};
+    return {'_id': id,'icon':icon,'rating':rating, 'place_id':placeId, 'name': name, 'address':address, 'lat': lat,'lng':lng};
   }
 }
