@@ -30,7 +30,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
     var t = widget.transaction;
     return Scaffold(
       appBar: AppBar(
-        title: Text(t.title),
+        title: Text(t.title??''),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.edit),
