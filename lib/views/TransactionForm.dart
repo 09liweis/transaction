@@ -144,9 +144,6 @@ class _TransactionForm extends State<TransactionForm> {
                   controller: titleController,
                   decoration: InputDecoration(labelText: 'Title'),
                   validator: (value){
-                    if (value.isEmpty) {
-                      return 'Please enter title.';
-                    }
                     return null;
                   },
                   onSaved: (value) {
