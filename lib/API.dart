@@ -11,7 +11,7 @@ const baseUrl = "https://samliweisen.herokuapp.com/api/";
 class API {
   static Future getTransactions() async {
     var url = baseUrl + "transactions";
-    var response = await http.get(url);
+    var response = await http.post(url);
     Iterable list = json.decode(response.body);
     return list.map((model) => Transaction.fromJson(model)).toList();
   }
