@@ -52,6 +52,14 @@ class _HomePageState extends State {
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.share),
+            onPressed: () {
+              
+            },
+          )
+        ]
       ),
       body: view,
       bottomNavigationBar: BottomNavigationBar(
