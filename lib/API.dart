@@ -21,6 +21,8 @@ class API {
     if (data['_id'] != null) {
       url+='/'+data['_id'];
       method = 'put';
+    } else {
+      url += '/new';
     }
     var body = json.encode(data);
     var response;
