@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'dart:convert';
+import 'package:http/http.dart' as http;
 import '../API.dart';
 import '../models/Place.dart';
 import './PlaceDetail.dart';
@@ -14,13 +14,24 @@ class _PlaceListState extends State {
   var _places = new List<Place>();
   List<Marker> _markers = <Marker>[];
   Completer<GoogleMapController> _controller = Completer();
+  _getImageAsUint8List(url) async {
+    var request = await http.get(url);
+    var bytes = request.bodyBytes;
+    return bytes.buffer.asUint8List();
+  }
   _getPlaces() async {
     var places = await API.getPlaces();
     var markers = <Marker>[];
     places.forEach((p) {
+      // var icon;
+      // if (p.icon!=null) {
+      //   icon = BitmapDescriptor.fromBytes(_getImageAsUint8List(p.icon));
+      // } else {
+      //   icon = BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen);
+      // }
       final marker = Marker(
         flat:true,
-        icon:BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
+        icon:BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
         markerId:MarkerId(p.placeId),
         position: LatLng(double.parse(p.lat), double.parse(p.lng)),
         // infoWindow: InfoWindow(title:"${p.name}", "${p.types?.first}")
@@ -109,7 +120,7 @@ class _PlaceListState extends State {
       ));
   }
   Widget _boxes(Place place) {
-    String _image = "https://lh5.googleusercontent.com/p/AF1QipO3VPL9m-b355xWeg4MXmOQTauFAEkavSluTtJU=w225-h160-k-no";
+    String _image = place.icon??"https://lh5.googleusercontent.com/p/AF1QipO3VPL9m-b355xWeg4MXmOQTauFAEkavSluTtJU=w225-h160-k-no";
     double lat = double.parse(place.lat);
     double lng = double.parse(place.lng);
     return  GestureDetector(

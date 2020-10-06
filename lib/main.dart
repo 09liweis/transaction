@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'views/TransactionList.dart';
 import 'views/PlaceList.dart';
+import 'package:wechat/wechat.dart';
+import 'dart:async';
 
 void main() => runApp(MyApp());
 
@@ -45,6 +47,26 @@ class _HomePageState extends State {
     }
   };
   int _currentIndex = 0;
+  void _share (arguments) async {
+    try {
+      var result = await Wechat.share(arguments);
+      // _result = result.toString() ?? 'null result';
+    } catch (e) {
+      // _result = e.toString();
+    }
+  }
+  void shareToWechat([String to = 'session']) async {
+    var arguments = {
+      'to': to,
+      'text': 'Welcome to user flutter wechat plugin.'
+    };
+    _share(arguments);
+  }
+  @override
+  void initState() {
+    super.initState();
+    Wechat.register('wxb5fff61eb40e17c1');
+  }
   @override
   build(context) {
     String title = this._views[this._currentIndex]['title'];
@@ -56,7 +78,7 @@ class _HomePageState extends State {
           IconButton(
             icon: Icon(Icons.share),
             onPressed: () {
-              
+              shareToWechat();
             },
           )
         ]
