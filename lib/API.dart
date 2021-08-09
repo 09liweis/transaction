@@ -30,12 +30,12 @@ class API {
     var response;
     if (method == 'post'){
       response = await http.post(url,
-        headers: {"Content-Type": "application/json"},
+        headers: headers,
         body: body
       );
     } else {
       response = await http.put(url,
-      headers:{'Content-Type':'application/json'},
+      headers:headers,
       body:body);
     }
     if (response.statusCode == 200) {
@@ -92,7 +92,7 @@ class API {
     var body = json.encode(data);
     var response = await http.post(
       url,
-      headers: {"Content-Type": "application/json"},
+      headers: headers,
       body: body
     );
     return response;
