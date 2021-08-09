@@ -8,7 +8,7 @@ import './models/Transaction.dart';
 const baseUrl = "https://samliweisen.herokuapp.com/api/";
 // const baseUrl = "http://localhost:8081/api/";
 
-const header = {"Content-Type": "application/json"};
+const headers = {"Content-Type": "application/json"};
 
 class API {
   static Future getTransactions() async {
